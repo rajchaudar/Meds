@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Registration</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style1.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Login Form -->
+      <div class="form-box login">
+        <form id="loginForm">
+          <h1>Login</h1>
+          <div class="input-box">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <i class="bx bxs-envelope"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+          <div class="forgot-link">
+            <a href="#" onclick="toggleResetForm()">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <p>Or</p>
+          <div id="googleLoginButton" class="g_id_signin"></div>
+        </form>
+      </div>
+
+      <!-- Password Reset Form (Initially Hidden) -->
+      <div class="form-box reset-password" id="resetPasswordWrapper" style="display: none;">
+        <form id="resetPasswordForm">
+          <h1>Reset Password</h1>
+          <p>Enter your email to receive a reset link.</p>
+          <div class="input-box">
+            <input type="email" id="resetEmail" placeholder="Enter your email" required />
+            <i class="bx bxs-envelope"></i>
+          </div>
+          <button type="submit" class="btn">Send Reset Link</button>
+          <p><a href="#" onclick="toggleResetForm()">Back to Login</a></p>
+          <p id="resetMessage" class="message"></p>
+        </form>
+      </div>
+
+      <!-- Registration Form -->
+      <div class="form-box register">
+        <form id="registerForm">
+          <h1>Registration</h1>
+          <div class="input-box">
+            <input type="text" id="name" placeholder="Full Name" required />
+            <i class="bx bxs-user"></i>
+          </div>
+          <div class="input-box">
+            <input type="email" id="email" placeholder="Email" required />
+            <i class="bx bxs-envelope"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" id="password" placeholder="Password" required />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+          <button type="submit" class="btn">Register</button>
+          <p>Or register with Google</p>
+          <div id="googleRegisterButton" class="g_id_signin"></div>
+        </form>
+      </div>
+
+      <!-- Toggle Section -->
+      <div class="toggle-box">
+        <div class="toggle-panel toggle-left">
+          <h1>Hello, Welcome!</h1>
+          <p>Don't have an account?</p>
+          <button class="btn register-btn">Register</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Welcome Back!</h1>
+          <p>Already have an account?</p>
+          <button class="btn login-btn">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/script.js"></script>
+  </body>
+</html>

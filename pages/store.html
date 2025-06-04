@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store - MedSupply</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .logout-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        .logout-link:hover {
+            color: gray;
+        }
+
+    </style>
+</head>
+<body class="bg-[#c9d6ff] pt-16">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-4 shadow-md fixed top-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <a href="dashboard.html" class="text-xl font-bold logo">MedSupply</a>
+    
+            <nav class="hidden md:flex">
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="dashboard.html" class="hover:text-gray-300 nav-link">Home</a></li>
+                    <li><a href="products.html" class="hover:text-gray-300 nav-link">Products</a></li>
+                    <li><a href="#" class="hover:text-gray-300 nav-link">Store</a></li>
+                    <li><a href="dashboard.html#contact" class="hover:text-gray-300 nav-link">Contact</a></li>
+                    <li><a href="orders.html" class="hover:text-gray-300">YourOrders</a></li>
+                    <li></li><li></li><li></li><li>
+                        <li>
+                            <a href="cart.html" class="relative flex items-center space-x-1">
+                              <span>Cart 🛒</span>
+                              <span id="cart-count" class="text-white text-xs bg-red-600 px-2 py-1 rounded-full absolute -top-2 -right-3 min-w-[20px] text-center">
+                                0
+                              </span>
+                            </a>
+                          </li>
+                </ul>
+            </nav>
+
+            <div>
+               
+                <a id="loginRegisterLink" href="login.html">Sign In / Register</a>
+                <span id="userName"></span>
+                <a id="logoutLink" href="#" class="hidden logout-link" onclick="logout()">| Logout</a>
+                
+            </div>
+        </div>
+        <div id="mobile-menu" class="fixed left-0 top-16 h-full w-1/2 bg-blue-800 text-white p-4 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <ul class="space-y-4">
+                <li><a href="dashboard.html" class="block hover:text-gray-300 nav-link">Home</a></li>
+                <li><a href="products.html" class="block hover:text-gray-300 nav-link">Products</a></li>
+                <li><a href="#" class="block hover:text-gray-300 nav-link">Store</a></li>
+                <li><a href="dashboard.html#contact" class="block hover:text-gray-300 nav-link">Contact</a></li>
+                <li><a href="orders.html" class="hover:text-gray-300">YourOrders</a></li>
+                <li>
+                    <a href="cart.html" class="relative flex items-center space-x-1">
+                      <span>Cart 🛒</span>
+                      <span id="cart-count" class="text-white text-xs px-2 py-1 rounded-full absolute -top-2 -right-3 min-w-[20px] text-center">
+                      </span>
+                    </a>
+                  </li>
+            </ul>
+        </div>
+    </header>
+    
+
+    <!-- Store Products Section -->
+    <section class="container mx-auto py-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Available Products</h2>
+        <div id="storeProducts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>© 2025 MedSupply. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+        var menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('-translate-x-full');
+        menu.classList.toggle('translate-x-0');
+        });
+    </script>
+    <script src="../js/config.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

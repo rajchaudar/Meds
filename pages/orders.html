@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | MedSupply</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS -->
+    <style>
+        /* 🔹 Background Gradient */
+        body {
+            background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+        }
+
+        .logout-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        .logout-link:hover { color: gray; }
+
+        /* 🔄 Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 📦 Order Box Styling */
+        .order-box {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+        }
+        .order-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 🚨 Error Message Styling */
+        .error-message {
+            background-color: rgba(255, 0, 0, 0.1);
+            border-left: 5px solid red;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 5px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen pt-20 flex flex-col items-center p-4">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-4 shadow-md fixed top-0 w-full z-50">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <a href="dashboard.html" class="text-xl font-bold logo">MedSupply</a>
+    
+            <nav class="hidden md:flex">
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="dashboard.html" class="hover:text-gray-300 nav-link">Home</a></li>
+                    <li><a href="products.html" class="hover:text-gray-300 nav-link">Products</a></li>
+                    <li><a href="store.html" class="hover:text-gray-300 nav-link">Store</a></li>
+                    <li><a href="dashboard.html#contact" class="hover:text-gray-300 nav-link">Contact</a></li>
+                    <li><a href="#" class="hover:text-gray-300">YourOrders</a></li>
+                    <li></li><li></li><li></li><li>
+                        <li>
+                            <a href="cart.html" class="relative flex items-center space-x-1">
+                              <span>Cart 🛒</span>
+                              <span id="cart-count" class="text-white text-xs bg-red-600 px-2 py-1 rounded-full absolute -top-2 -right-3 min-w-[20px] text-center">
+                                0
+                              </span>
+                            </a>
+                          </li>
+                </ul>
+            </nav>
+
+            <div>
+               
+                <a id="loginRegisterLink" href="login.html">Sign In / Register</a>
+                <span id="userName"></span>
+                <a id="logoutLink" href="#" class="hidden logout-link" onclick="logout()">| Logout</a>
+                
+            </div>
+        </div>
+        <div id="mobile-menu" class="fixed left-0 top-16 h-full w-1/2 bg-blue-800 text-white p-4 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <ul class="space-y-4">
+                <li><a href="dashboard.html" class="block hover:text-gray-300 nav-link">Home</a></li>
+                <li><a href="products.html" class="block hover:text-gray-300 nav-link">Products</a></li>
+                <li><a href="store.html" class="block hover:text-gray-300 nav-link">Store</a></li>
+                <li><a href="dashboard.html#contact" class="block hover:text-gray-300 nav-link">Contact</a></li>
+                <li><a href="#" class="hover:text-gray-300">YourOrders</a></li>
+                <li><a href="cart.html" class="relative">
+                    Cart 🛒 <span id="cart-count" class=" text-white text-xs px-2 py-1 rounded-full absolute top-0 right-0"></span>
+              </a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 🛍️ Orders Section -->
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl mt-6 animate-fadeIn">
+        <h2 class="text-3xl font-bold text-center text-blue-700 mb-6 animate-bounce">🛍️ My Orders</h2>
+
+        <!-- 🚀 Orders List -->
+        <div id="orders-container" class="space-y-4">
+            <!-- Example Order Box with Status Colors -->
+            <!-- <div class="order-box bg-gray-50 p-4 rounded-lg shadow-md">
+                <p class="text-lg font-semibold text-blue-600">Order #12345</p>
+                <p class="text-gray-700">Total: <span class="font-medium">$50.00</span></p>
+                <p class="text-gray-700">Placed on: <span class="font-medium">March 28, 2025</span></p>-->
+                <p class="status bg-yellow-200 text-yellow-800 px-2 py-1 rounded-md inline-block">Pending</p>
+                <p class="status bg-green-200 text-green-800 px-2 py-1 rounded-md inline-block">Delivered</p>
+                <p class="status bg-blue-200 text-blue-800 px-2 py-1 rounded-md inline-block">Paid</p>
+                <p class="status bg-orange-200 text-orange-800 px-2 py-1 rounded-md inline-block">Shipping</p>
+            </div> 
+        </div>
+        <div id="toast" class="hidden fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50">
+            Please log in to view orders.
+        </div>
+
+        <!-- 🚨 Error Message -->
+        <p id="error-message" class="hidden text-red-500 text-center mt-4 error-message">❌ Failed to load orders. (Check if you are logged out!)</p>
+    </div>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('-translate-x-full');
+            menu.classList.toggle('translate-x-0');
+        });
+        
+    </script>
+    <script src="../js/config.js"></script>
+    <script src="../js/orders.js"></script>
+</body>
+</html>

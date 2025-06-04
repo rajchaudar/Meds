@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - MedSupply</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        header {
+            height: 60px;
+        }
+
+        .nav-link {
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-link:hover {
+            color: gray;
+            transform: scale(1.1);
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s;
+        }
+        
+        body {
+            padding-top: 60px; /* Adjust to match header height */
+            margin: 0;
+            background-color: #c9d6ff;
+        }
+        
+        section {
+            padding: 20px 0; /* Reduce default padding */
+            margin: 0;
+        }
+
+        .logout-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        .logout-link:hover {
+            color: gray;
+        }
+
+        #home {
+            min-height: calc(100vh - 80px);
+        }
+        .swiper, .swiper-slide {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body class="bg-[#c9d6ff]">
+    <header class="bg-blue-600 text-white py-4 shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <a href="dashboard.html" class="text-xl font-bold logo">MedSupply</a>
+
+            <nav class="hidden md:flex">
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="dashboard.html" class="hover:text-gray-300 nav-link">Home</a></li>
+                    <li><a href="#" class="hover:text-gray-300 nav-link">Products</a></li>
+                    <li><a href="store.html" class="hover:text-gray-300 nav-link">Store</a></li>
+                    <li><a href="dashboard.html#contact" class="hover:text-gray-300 nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div>
+                <a id="loginRegisterLink" href="login.html">Sign In / Register</a>
+                <span id="userName"></span>
+                <a id="logoutLink" href="#" class="hidden logout-link" onclick="logout()">| Logout</a>
+                
+            </div>
+        </div>
+        <div id="mobile-menu" class="fixed left-0 top-16 h-full w-1/2 bg-blue-700 text-white p-4 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <ul class="space-y-4">
+                <li><a href="dashboard.html" class="block hover:text-gray-300 nav-link">Home</a></li>
+                <li><a href="#" class="block hover:text-gray-300 nav-link">Products</a></li>
+                <li><a href="store.html" class="block hover:text-gray-300 nav-link">Store</a></li>
+                <li><a href="dashboard.html#contact" class="block hover:text-gray-300 nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+  <!-- Products Section -->
+  <section id="products" class="container mx-auto py-10">
+    <h2 class="text-2xl font-bold text-center mb-6">Our Products</h2>
+    <div id="marketedProducts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+        <!-- This is where products will be dynamically inserted -->
+    </div>
+</section>
+<!-- Popup Modal -->
+<!-- Modal -->
+<div id="productModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <h2 id="modalTitle" class="text-xl font-bold"></h2>
+        <img id="modalImage" src="" alt="" class="w-full h-48 object-cover rounded-md mt-3">
+        <p id="modalDescription" class="mt-3 text-gray-700"></p>
+        <p id="modalUses" class="mt-1 text-gray-700 font-semibold"></p>
+        <p id="modalContent" class="mt-1 text-gray-600"></p>
+        <p id="modalManufacturer" class="mt-1 text-gray-600"></p>
+        <p id="modalPrice" class="mt-2 font-bold text-blue-600"></p>
+        <button onclick="closeModal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Close</button>
+    </div>
+</div>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>© 2025 MedSupply. All rights reserved.</p>
+    </footer>
+    
+    <script src="../js/config.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('-translate-x-full');
+            menu.classList.toggle('translate-x-0');
+        });
+    </script>
+</body>
+</html>

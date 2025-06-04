@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#c9d6ff] flex justify-center items-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-2xl font-semibold text-center mb-6">Shipping Address</h2>
+        
+        <!-- Checkout Form -->
+        <form id="checkout-form" class="space-y-4">
+            <div>
+                <label class="block font-medium">Full Name</label>
+                <input type="text" id="name" required pattern="[A-Za-z ]{3,50}" title="Only letters, min 3 characters" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div>
+                <label class="block font-medium">Email</label>
+                <input type="email" id="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address (e.g., example@domain.com)"
+                    class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div>
+                <label class="block font-medium">Contact Number</label>
+                <input type="text" id="contact" required pattern="[0-9]{10}" maxlength="10" title="Enter a 10-digit number" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div>
+                <label class="block font-medium">Address Line 1</label>
+                <input type="text" id="addressLine1" required minlength="5" title="Enter at least 5 characters" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <label class="block font-medium">City</label>
+                    <input type="text" id="city" required pattern="[A-Za-z ]{2,50}" title="Only letters, min 2 characters" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+                </div>
+                <div class="w-1/2">
+                    <label class="block font-medium">State</label>
+                    <input type="text" id="state" required pattern="[A-Za-z ]{2,50}" title="Only letters, min 2 characters" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+                </div>
+            </div>
+            <div>
+                <label class="block font-medium">Postal Code</label>
+                <input type="text" id="postalCode" required pattern="[0-9]{6}" maxlength="6" title="Enter a 6-digit postal code" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400">
+            </div>
+            <button id="checkout-btn"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-200">
+            Proceed to Payment
+        </button>
+        <button id="themeToggle" class="absolute top-4 right-4 text-2xl">🌙</button>
+        </form>
+
+        <!-- Payment Section -->
+        <div id="payment-section" class="bg-white p-6 rounded-lg shadow-lg w-full mt-8 hidden">
+            <h3 class="text-xl font-semibold text-center mb-4">Enter Card Details</h3>
+            <form id="payment-form" class="space-y-4">
+                <div id="card-element" class="border p-4 bg-gray-100 rounded-md"></div>
+                <div id="card-errors" class="text-red-500 text-sm mt-2"></div>
+                <button type="submit" id="pay-btn" disabled class="w-full bg-gray-400 text-white py-2 rounded-md cursor-not-allowed">
+                    Pay Now
+                </button>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="hidden fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg text-center">
+            ✅ Payment Successful! Redirecting...
+        </div>
+    </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/checkout.js"></script>
+    <script>
+        document.getElementById("themeToggle")?.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            const isDark = document.body.classList.contains("dark");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+            document.getElementById("themeToggle").innerText = isDark ? "☀️" : "🌙";
+        });
+        
+        window.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark");
+                document.getElementById("themeToggle").innerText = "☀️";
+            }
+        });
+    </script>
+</body>
+</html>

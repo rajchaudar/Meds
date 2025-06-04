@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed | MedSupply</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS -->
+    <style>
+        /* 🎉 Tada Animation */
+        @keyframes tada {
+            0% { transform: scale(1); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1); }
+        }
+        .animate-tada { animation: tada 1.2s ease-in-out; }
+
+        /* ✅ Checkmark Animation */
+        @keyframes checkmark {
+            0% { stroke-dashoffset: 50; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .checkmark path {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: checkmark 0.6s ease-out forwards;
+        }
+
+        /* ⏳ Loading Bar */
+        #progress-bar {
+            height: 8px;
+            width: 100%;
+            background: linear-gradient(to right, #34D399 0%, #10B981 0%);
+            transition: width 5s linear;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-500 to-green-400 flex flex-col items-center justify-center min-h-screen p-4 relative">
+
+    <!-- 🎊 Confetti Canvas -->
+    <canvas id="confetti-canvas" class="absolute top-0 left-0 w-full h-full pointer-events-none"></canvas>
+
+    <div class="bg-white shadow-lg rounded-lg p-8 text-center max-w-md relative z-10">
+        
+        <!-- ✅ Checkmark Icon -->
+        <svg class="checkmark mx-auto w-16 h-16 text-green-500" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="23" fill="none" stroke="currentColor" stroke-width="3"/>
+            <path d="M15 25l7 7 13-13" fill="none" stroke="currentColor" stroke-width="3"/>
+        </svg>
+
+        <h2 class="text-3xl font-bold text-green-600 animate-tada mt-4">🎉 Order Placed Successfully! 🎉</h2>
+        <p class="text-gray-700 mt-4">Your order has been placed and is being processed.</p>
+        
+        <!-- ⏳ Countdown Message -->
+        <p class="text-gray-600 mt-4">Redirecting to orders page in <span id="countdown" class="font-semibold text-blue-600">5</span> seconds...</p>
+
+        <!-- 🔄 Progress Bar -->
+        <div class="w-full bg-gray-300 rounded-full mt-4">
+            <div id="progress-bar" class="rounded-full"></div>
+        </div>
+
+        <div class="mt-6">
+            <a href="orders.html" class="bg-blue-600 text-white px-6 py-2 rounded-lg text-lg font-medium hover:bg-blue-700 transition shadow-md">
+                Go to Orders
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 🎊 Confetti Animation
+        const canvas = document.getElementById("confetti-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const confettiPieces = [];
+        const confettiCount = 100;
+
+        for (let i = 0; i < confettiCount; i++) {
+            confettiPieces.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                size: Math.random() * 10 + 5,
+                color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+                velocity: Math.random() * 3 + 2
+            });
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettiPieces.forEach((piece) => {
+                ctx.fillStyle = piece.color;
+                ctx.beginPath();
+                ctx.arc(piece.x, piece.y, piece.size, 0, Math.PI * 2);
+                ctx.fill();
+                piece.y += piece.velocity;
+
+                if (piece.y > canvas.height) {
+                    piece.y = -10;
+                    piece.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+
+        drawConfetti();
+
+        // ⏳ Countdown and Redirect to Orders Page
+        let countdown = 5;
+        const countdownElement = document.getElementById("countdown");
+
+        function updateCountdown() {
+            if (countdown > 0) {
+                countdownElement.textContent = countdown;
+                countdown--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                window.location.href = "orders.html"; // Redirect after countdown
+            }
+        }
+
+        setTimeout(updateCountdown, 1000);
+
+        // 🔄 Start Loading Bar Animation
+        document.getElementById("progress-bar").style.width = "100%";
+
+    </script>
+
+</body>
+</html>

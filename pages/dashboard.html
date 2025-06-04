@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedSupply - Online Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        header {
+            height: 60px;
+        }
+        
+        body {
+            padding-top: 60px; /* Adjust to match header height */
+            margin: 0;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            background-color: #c9d6ff;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        section {
+            padding: 20px 0; /* Reduce default padding */
+            margin: 0;
+        }
+
+        .logout-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        .logout-link:hover {
+            color: gray;
+        }
+
+        #home {
+            min-height: calc(100vh - 80px);
+        }
+        
+        .swiper, .swiper-slide {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .nav-link {
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-link:hover {
+            color: gray;
+            transform: scale(1.1);
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-button {
+            transition: transform 0.3s;
+        }
+
+        .product-button:hover {
+            transform: scale(1.1);
+        }
+
+        #productModal {
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+            background-color: #f0f0f0;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .floating-label {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .floating-label input, 
+        .floating-label textarea {
+            width: 100%;
+            padding: 16px; /* Increased padding */
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .floating-label input:focus, 
+        .floating-label textarea:focus {
+            border-color: #2563eb;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .floating-label label {
+            position: absolute;
+            top: 50%; /* Center the label vertically */
+            left: 16px;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            background: transparent;
+            transition: all 0.3s ease-in-out;
+            pointer-events: none;
+        }
+
+        .floating-label input:focus + label, 
+        .floating-label textarea:focus + label,
+        .floating-label input:not(:placeholder-shown) + label, 
+        .floating-label textarea:not(:placeholder-shown) + label {
+            top: 5px; /* Move the label up */
+            font-size: 0.85rem;
+            color: #2563eb;
+            background: white; /* Change background to white */
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .scroll-to-top.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+
+        .contact-button {
+            width: 100%;
+            background: linear-gradient(to right, #4f8cfe, #0037fe);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-button:hover {
+            background: linear-gradient(to right, #0037fe, #4f8cfe);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-[#c9d6ff]">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-4 shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <a href="dashboard.html" class="text-xl font-bold logo">MedSupply</a>
+
+            <nav class="hidden md:flex">
+                <ul class="flex space-x-6 text-lg">
+                    <li><a href="dashboard.html" class="hover:text-gray-300 nav-link">Home</a></li>
+                    <li><a href="products.html" class="hover:text-gray-300 nav-link">Products</a></li>
+                    <li><a href="store.html" class="hover:text-gray-300 nav-link">Store</a></li>
+                    <li><a href="dashboard.html#contact" class="hover:text-gray-300 nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div>
+                <a id="loginRegisterLink" href="login.html">Sign In / Register</a>
+                <span id="userName"></span>
+                <a id="logoutLink" href="#" class="hidden logout-link" onclick="logout()">| Logout</a>
+                
+            </div>
+        </div>
+        <div id="mobile-menu" class="fixed left-0 top-16 h-full w-1/2 bg-blue-700 text-white p-4 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <ul class="space-y-4">
+                <li><a href="dashboard.html" class="block hover:text-gray-300 nav-link">Home</a></li>
+                <li><a href="#" class="block hover:text-gray-300 nav-link">Products</a></li>
+                <li><a href="store.html" class="block hover:text-gray-300 nav-link">Store</a></li>
+                <li><a href="dashboard.html#contact" class="block hover:text-gray-300 nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+
+    <section class="w-full px-2 py-5">
+        <div class="swiper rounded-3xl shadow-2xl overflow-hidden">
+          <div class="swiper-wrapper">
+      
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <div class="relative h-[650px] bg-cover bg-center" style="background-image: url(../public/bg.png);">
+                <div class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                  <div class="text-center text-white px-6">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Your Trusted Medical Supplier</h2>
+                    <p class="text-lg md:text-xl font-medium">Explore top-quality medical products delivered fast and safe.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <div class="relative h-[650px] bg-cover bg-center" style="background-image: url(../public/bg2.png);">
+                <div class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                  <div class="text-center text-white px-6">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Quality Pharmacy Essentials</h2>
+                    <p class="text-lg md:text-xl font-medium">Get reliable and certified products for every medical need.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <div class="relative h-[650px] bg-cover bg-center" style="background-image: url(../public/bg3.jpg);">
+                <div class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                  <div class="text-center text-white px-6">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Serving Hospitals Nationwide</h2>
+                    <p class="text-lg md:text-xl font-medium">Partnering with healthcare providers for better care.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+          </div>
+      
+          <!-- Pagination & Navigation -->
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </section>
+
+    <!-- Products Section -->
+    <section id="products-container" class="container mx-auto py-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Our Products</h2>
+        <div id="marketedProducts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+            <!-- Products from products.html will be inserted here -->
+        </div>
+    </section>
+
+    <!-- Popup Modal -->
+    <div id="productModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <h2 id="modalTitle" class="text-xl font-bold"></h2>
+            <img id="modalImage" src="" alt="" class="w-full h-48 object-cover rounded-md mt-3">
+            <p id="modalDescription" class="mt-3 text-gray-700"></p>
+            <p id="modalUses" class="mt-1 text-gray-700 font-semibold"></p>
+            <p id="modalContent" class="mt-1 text-gray-600"></p>
+            <p id="modalManufacturer" class="mt-1 text-gray-600"></p>
+            <p id="modalPrice" class="mt-2 font-bold text-blue-600"></p>
+            <button onclick="closeModal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded close-button">Close</button>
+        </div>
+    </div>
+
+    <!-- Branches Section -->
+    <section id="branches" class="container mx-auto py-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Our Branches</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+            <!-- Mumbai Branch -->
+            <div class="bg-white p-6 shadow-lg rounded-lg text-center branch-card">
+                <img src="../public/Mumbai.png" alt="Mumbai Branch" class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold">Mumbai</h3>
+                <p class="text-gray-600">123 Main St, Mumbai, India</p>
+                <p class="text-gray-600">📞 +91 98765 43210</p>
+            </div>
+            
+            <!-- Delhi Branch -->
+            <div class="bg-white p-6 shadow-lg rounded-lg text-center branch-card">
+                <img src="../public/Delhi.png" alt="Delhi Branch" class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold">Delhi</h3>
+                <p class="text-gray-600">456 Market Rd, Delhi, India</p>
+                <p class="text-gray-600">📞 +91 99876 54321</p>
+            </div>
+
+            <!-- Bangalore Branch -->
+            <div class="bg-white p-6 shadow-lg rounded-lg text-center branch-card">
+                <img src="../public/Bangalore.png" alt="Bangalore Branch" class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold">Bangalore</h3>
+                <p class="text-gray-600">789 IT Park, Bangalore, India</p>
+                <p class="text-gray-600">📞 +91 91234 56789</p>
+            </div>
+
+            <!-- Chennai Branch -->
+            <div class="bg-white p-6 shadow-lg rounded-lg text-center branch-card">
+                <img src="../public/Chennai.png" alt="Chennai Branch" class="w-full h-40 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold">Chennai</h3>
+                <p class="text-gray-600">101 Beach Rd, Chennai, India</p>
+                <p class="text-gray-600">📞 +91 90000 11111</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container mx-auto py-10">
+        <h2 class="text-2xl font-bold text-center mb-6">Contact Us</h2>
+        <p class="text-center">For inquiries, reach us at 
+            <a href="mailto:support@medsupply.com" class="underline">support@medsupply.com</a>.
+        </p>
+        <p class="text-center mb-6">Phone: +91 98765 43210</p>
+
+        <!-- Contact Form -->
+        <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-300">
+            <form id="contactForm">
+                <div class="floating-label">
+                    <input type="text" id="name" name="name" required class="placeholder-transparent">
+                    <label for="name">Full Name</label>
+                </div>
+                
+                <div class="floating-label">
+                    <input type="email" id="email" name="email" required class="placeholder-transparent">
+                    <label for="email">Email</label>
+                </div>
+                
+                <div class="floating-label">
+                    <textarea id="message" name="message" rows="4" required class="placeholder-transparent"></textarea>
+                    <label for="message">Message</label>
+                </div>
+                
+                <button type="submit" class="contact-button flex items-center justify-center gap-2">
+                    <span id="btnText">Send Message</span>
+                    <span id="spinner" class="hidden w-4 h-4 border-2 border-t-transparent border-blue-600 rounded-full animate-spin"></span>
+                </button>
+            </form>
+            
+            <!-- Success Message -->
+            <p id="errorMessage" class="hidden text-red-600 text-center mt-2"></p>
+            <p id="successMessage" class="hidden text-green-600 text-center mt-4">Message sent successfully!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-10">
+        <p>© 2025 MedSupply. All rights reserved.</p>
+    </footer>
+
+    <button class="scroll-to-top" onclick="scrollToTop()">↑</button>
+    <!-- External JS Scripts -->
+<script src="../js/config.js"></script>
+<script src="../js/dashboard.js"></script>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<script>
+    document.getElementById('menu-toggle').addEventListener('click', function () {
+        var menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('-translate-x-full');
+        menu.classList.toggle('translate-x-0');
+    });
+    
+  // Swiper Initialization (modern UI)
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    autoplay: {
+      delay: 3000,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+
+  // Scroll to top button logic
+  window.onscroll = function() {
+    var button = document.querySelector('.scroll-to-top');
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      button.classList.add('show');
+    } else {
+      button.classList.remove('show');
+    }
+  };
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Typewriter effect
+  const text = "Welcome to MedSupply";
+  let index = 0;
+  const typewriter = document.querySelector('.typewriter');
+
+  /*function type() {
+    if (index < text.length) {
+      typewriter.innerHTML += text.charAt(index);
+      index++;
+      setTimeout(type, 100);
+    }
+  }
+  type();*/
+
+
+</script>
+</body>
+</html>
